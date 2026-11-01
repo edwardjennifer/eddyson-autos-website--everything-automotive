@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Read customer reviews of Eddyson Autos' premium vehicle sales, repairs, maintenance and spare parts service.">
+  <title>Customer Reviews | Eddyson Autos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#080b0c; --panel:#121819; --gold:#d8b66d; --ivory:#f6f3ed; --muted:#aeb5b2; --line:rgba(255,255,255,.16); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--ink); color:#fff; font-family:Manrope,Arial,sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; cursor:pointer; }
+    .shell { width:min(90vw,1400px); margin:auto; }
+    .topbar { position:absolute; z-index:10; inset:0 0 auto; height:82px; border-bottom:1px solid var(--line); }
+    .nav { height:100%; display:flex; align-items:center; justify-content:space-between; gap:30px; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:19px; font-weight:800; letter-spacing:-1px; }
+    .brand-mark { display:grid; place-items:center; width:21px; height:21px; border:2px solid var(--gold); border-radius:50%; color:var(--gold); font:700 11px/1 "DM Mono",monospace; }
+    .nav-links { display:flex; align-items:center; gap:30px; margin-left:auto; font-size:10px; font-weight:800; letter-spacing:.1em; }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color:var(--gold); }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:12px; min-height:46px; padding:0 19px; border:1px solid transparent; font-size:10px; font-weight:800; letter-spacing:.07em; transition:.25s ease; }
+    .button:hover { transform:translateY(-3px); }
+    .button--outline { border-color:var(--gold); }
+    .button--outline:hover { background:var(--gold); color:var(--ink); }
+    .button--gold { background:var(--gold); color:var(--ink); }
+    .menu-toggle { display:none; padding:4px; border:0; background:transparent; color:#fff; font-size:22px; }
+    .eyebrow { display:flex; align-items:center; gap:10px; color:var(--gold); font:10px "DM Mono",monospace; letter-spacing:.13em; text-transform:uppercase; }
+    .eyebrow::before { width:28px; height:1px; background:currentColor; content:""; }
+    .hero { position:relative; isolation:isolate; display:flex; align-items:flex-end; min-height:620px; height:82vh; max-height:800px; padding-bottom:9vh; overflow:hidden; }
+    .hero::after { position:absolute; z-index:-1; inset:0; background:linear-gradient(90deg,rgba(5,8,9,.94),rgba(5,8,9,.58) 58%,rgba(5,8,9,.22)),linear-gradient(0deg,rgba(5,8,9,.9),transparent 58%); content:""; }
+    .hero-media { position:absolute; z-index:-2; inset:0; background:url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2400&q=90") center/cover; }
+    h1 { max-width:860px; margin:18px 0 25px; font-size:clamp(58px,8.5vw,124px); font-weight:800; letter-spacing:-.08em; line-height:.87; }
+    h1 em, h2 em { font-family:"Playfair Display",serif; font-weight:600; }
+    .hero p { max-width:440px; margin:0; color:#e0e4df; font-size:14px; line-height:1.8; }
+    .reviews { padding:110px 0; background:var(--ivory); color:#101313; }
+    .heading { display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:44px; }
+    h2 { max-width:720px; margin:13px 0 0; font-size:clamp(42px,5.25vw,72px); font-weight:800; letter-spacing:-.075em; line-height:.94; }
+    .heading p { max-width:390px; margin:0; color:#5f6562; font-size:14px; line-height:1.8; }
+    .review-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .review { display:flex; flex-direction:column; min-height:295px; padding:27px; background:#fff; border:1px solid #e1ddd5; }
+    .stars { color:#9b7430; font-size:17px; letter-spacing:3px; }
+    .review blockquote { flex:1; margin:30px 0; font:600 19px/1.48 "Playfair Display",serif; letter-spacing:-.02em; }
+    .review footer { padding-top:14px; border-top:1px solid #e2dfd8; }
+    .review strong { display:block; font-size:11px; letter-spacing:.06em; }
+    .review span { color:#707572; font:9px "DM Mono",monospace; letter-spacing:.06em; }
+    .review-cta { padding:105px 0; text-align:center; }
+    .review-cta h2 { margin:17px auto 28px; font-size:clamp(45px,6.1vw,82px); }
+    .review-cta p { max-width:470px; margin:0 auto 29px; color:var(--muted); font-size:14px; line-height:1.75; }
+    footer.site-footer { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; min-height:105px; border-top:1px solid var(--line); color:#aab0ad; font-size:9px; letter-spacing:.05em; }
+    footer.site-footer span:last-child { text-align:right; }
+    @media (max-width:900px) { .review-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:760px) {
+      .shell { width:min(90vw,570px); }
+      .topbar { height:70px; }
+      .nav-links, .nav .button--outline { display:none; }
+      .menu-toggle { display:block; }
+      .nav-links.is-open { position:absolute; inset:70px 0 auto; display:flex; flex-direction:column; align-items:stretch; gap:0; padding:10px 5vw 18px; background:#101415; border-bottom:1px solid var(--line); }
+      .nav-links.is-open a { padding:14px 0; }
+      .hero { min-height:570px; height:76vh; }
+      h1 { font-size:clamp(54px,15vw,80px); }
+      .reviews, .review-cta { padding:80px 0; }
+      .heading { display:block; }
+      .heading p { margin-top:22px; }
+      .review-grid { grid-template-columns:1fr; }
+      .review { min-height:240px; }
+      footer.site-footer { grid-template-columns:1fr; gap:13px; padding:25px 0; }
+      footer.site-footer span:last-child { text-align:left; }
+    }
+    @media (max-width:390px) { .shell { width:calc(100% - 32px); } .hero { min-height:530px; } h1 { font-size:51px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Eddyson Autos home"><span class="brand-mark">E</span>EDDYSON AUTOS</a>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html#services">SERVICES</a>
+        <a href="index.html#inventory">VEHICLES</a>
+        <a href="about.html">ABOUT US</a>
+        <a href="reviews.html" aria-current="page">REVIEWS</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+      <a class="button button--outline" href="https://wa.me/2349157424129">WHATSAPP US</a>
+      <button class="menu-toggle" id="menu-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation">&#9776;</button>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="reviews-hero-title">
+      <div class="hero-media"></div>
+      <div class="shell">
+        <div class="eyebrow">The Eddyson experience</div>
+        <h1 id="reviews-hero-title">Trusted on<br>every <em>road.</em></h1>
+        <p>Our customers are at the heart of every vehicle sold, repaired and cared for at Eddyson Autos.</p>
+      </div>
+    </section>
+    <section class="reviews" aria-labelledby="reviews-title">
+      <div class="shell">
+        <div class="heading"><div><div class="eyebrow" style="color:#8d6a2e">Customer stories</div><h2 id="reviews-title">What drivers say<br>about <em>Eddyson.</em></h2></div><p>We are proud to build lasting relationships through attentive service and an uncompromising standard of care.</p></div>
+        <div class="review-grid">
+          <article class="review"><div class="stars" aria-label="Five stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>“The team made the entire buying experience feel easy and personal. I drove away with complete confidence.”</blockquote><footer><strong>CHIOMA A.</strong><span>VEHICLE SALES CUSTOMER</span></footer></article>
+          <article class="review"><div class="stars" aria-label="Five stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>“Clear advice, excellent communication and exceptional workmanship. My car is always in the best hands.”</blockquote><footer><strong>DAVID O.</strong><span>WORKSHOP CUSTOMER</span></footer></article>
+          <article class="review"><div class="stars" aria-label="Five stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>“I needed a specific part quickly. Eddyson found the right fit and kept me updated from start to finish.”</blockquote><footer><strong>AMAKA E.</strong><span>SPARE PARTS CUSTOMER</span></footer></article>
+        </div>
+      </div>
+    </section>
+    <section class="review-cta" id="contact" aria-labelledby="contact-title">
+      <div class="shell"><div class="eyebrow" style="justify-content:center">We are ready to help</div><h2 id="contact-title">Let us earn your<br><em>five stars.</em></h2><p>Whether you need a vehicle, a repair, a service or the right spare part, our team is one message away.</p><a class="button button--gold" href="https://wa.me/2349157424129">WHATSAPP US <span class="arrow">&nearr;</span></a></div>
+    </section>
+  </main>
+  <footer class="site-footer shell"><a class="brand" href="index.html"><span class="brand-mark">E</span>EDDYSON AUTOS</a><span>&copy; 2026 EDDYSON AUTOS. ALL RIGHTS RESERVED.</span><span>EVERYTHING AUTOMOTIVE</span></footer>
+  <script>
+    const navToggle = document.querySelector('#menu-toggle');
+    const navLinks = document.querySelector('#nav-links');
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+      navToggle.textContent = isOpen ? '\u00d7' : '\u2630';
+    });
+    navLinks.addEventListener('click', event => {
+      if (event.target.matches('a') && navLinks.classList.contains('is-open')) {
+        navLinks.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open navigation');
+        navToggle.textContent = '\u2630';
+      }
+    });
+  </script>
+</body>
+</html>
