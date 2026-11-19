@@ -32,7 +32,7 @@
     .eyebrow::before { width:28px; height:1px; background:currentColor; content:""; }
     .hero { position:relative; isolation:isolate; display:flex; align-items:flex-end; min-height:620px; height:82vh; max-height:800px; padding-bottom:9vh; overflow:hidden; }
     .hero::after { position:absolute; z-index:-1; inset:0; background:linear-gradient(90deg,rgba(5,8,9,.94),rgba(5,8,9,.58) 58%,rgba(5,8,9,.22)),linear-gradient(0deg,rgba(5,8,9,.9),transparent 58%); content:""; }
-    .hero-media { position:absolute; z-index:-2; inset:0; background:url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2400&q=90") center/cover; }
+    .hero-media { position:absolute; z-index:-2; inset:0; background:url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2400&q=90") center/cover; animation:slow-pan 16s ease-in-out infinite alternate; }
     h1 { max-width:860px; margin:18px 0 25px; font-size:clamp(58px,8.5vw,124px); font-weight:800; letter-spacing:-.08em; line-height:.87; }
     h1 em, h2 em { font-family:"Playfair Display",serif; font-weight:600; }
     .hero p { max-width:440px; margin:0; color:#e0e4df; font-size:14px; line-height:1.8; }
@@ -41,7 +41,8 @@
     h2 { max-width:720px; margin:13px 0 0; font-size:clamp(42px,5.25vw,72px); font-weight:800; letter-spacing:-.075em; line-height:.94; }
     .heading p { max-width:390px; margin:0; color:#5f6562; font-size:14px; line-height:1.8; }
     .review-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .review { display:flex; flex-direction:column; min-height:295px; padding:27px; background:#fff; border:1px solid #e1ddd5; }
+    .review { display:flex; flex-direction:column; min-height:295px; padding:27px; background:#fff; border:1px solid #e1ddd5; transition:transform .35s ease, box-shadow .35s ease; }
+    .review:hover { transform:translateY(-7px); box-shadow:0 18px 34px rgba(11,14,14,.12); }
     .stars { color:#9b7430; font-size:17px; letter-spacing:3px; }
     .review blockquote { flex:1; margin:30px 0; font:600 19px/1.48 "Playfair Display",serif; letter-spacing:-.02em; }
     .review footer { padding-top:14px; border-top:1px solid #e2dfd8; }
@@ -52,6 +53,8 @@
     .review-cta p { max-width:470px; margin:0 auto 29px; color:var(--muted); font-size:14px; line-height:1.75; }
     footer.site-footer { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; min-height:105px; border-top:1px solid var(--line); color:#aab0ad; font-size:9px; letter-spacing:.05em; }
     footer.site-footer span:last-child { text-align:right; }
+    @keyframes slow-pan { from { transform:scale(1); } to { transform:scale(1.08); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; scroll-behavior:auto !important; } }
     @media (max-width:900px) { .review-grid { grid-template-columns:1fr 1fr; } }
     @media (max-width:760px) {
       .shell { width:min(90vw,570px); }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Learn about Eddyson Autos, Lagos' complete automotive partner for vehicle sales, repairs, maintenance and spare parts.">
+  <meta name="description" content="Learn about Eddyson Autos, a complete automotive partner with more than 10 years of experience in vehicle sales, repairs, maintenance and spare parts.">
   <title>About Us | Eddyson Autos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
     .eyebrow::before { width:28px; height:1px; background:currentColor; content:""; }
     .hero { position:relative; isolation:isolate; display:flex; align-items:flex-end; min-height:680px; height:92vh; max-height:860px; padding-bottom:9vh; overflow:hidden; }
     .hero::after { position:absolute; z-index:-1; inset:0; background:linear-gradient(90deg,rgba(5,8,9,.94),rgba(5,8,9,.55) 60%,rgba(5,8,9,.24)),linear-gradient(0deg,rgba(5,8,9,.9),transparent 58%); content:""; }
-    .hero-media { position:absolute; z-index:-2; inset:0; background:url("https://images.unsplash.com/photo-1600706432502-77a0e2e327b6?auto=format&fit=crop&w=2400&q=90") center/cover; }
+    .hero-media { position:absolute; z-index:-2; inset:0; background:url("https://images.unsplash.com/photo-1600706432502-77a0e2e327b6?auto=format&fit=crop&w=2400&q=90") center/cover; animation:slow-pan 16s ease-in-out infinite alternate; }
     h1 { max-width:870px; margin:18px 0 26px; font-size:clamp(58px,8.5vw,124px); font-weight:800; letter-spacing:-.08em; line-height:.87; }
     h1 em, h2 em { font-family:"Playfair Display",serif; font-weight:600; }
     .hero p { max-width:440px; margin:0; color:#e0e4df; font-size:14px; line-height:1.8; }
@@ -45,7 +45,8 @@
     .heading { display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:44px; }
     .heading p { max-width:380px; margin:0; color:var(--muted); font-size:14px; line-height:1.8; }
     .value-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
-    .value { min-height:290px; padding:27px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .value { min-height:290px; padding:27px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); transition:transform .35s ease, background .35s ease; }
+    .value:hover { transform:translateY(-6px); background:#182020; }
     .value span { color:var(--lime); font:10px "DM Mono",monospace; }
     .value h3 { margin:53px 0 12px; font-size:20px; letter-spacing:-.04em; }
     .value p { margin:0; color:#aeb5b2; font-size:13px; line-height:1.75; }
@@ -64,6 +65,8 @@
     .contact-email:hover { background:#101510; color:#fff; }
     footer { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; min-height:105px; color:#aab0ad; font-size:9px; letter-spacing:.05em; }
     footer span:last-child { text-align:right; }
+    @keyframes slow-pan { from { transform:scale(1); } to { transform:scale(1.08); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; scroll-behavior:auto !important; } }
     @media (max-width:760px) {
       .shell { width:min(90vw,570px); }
       .topbar { height:70px; }
@@ -110,7 +113,7 @@
       <div class="shell">
         <div class="eyebrow">The Eddyson story</div>
         <h1 id="about-hero-title">More than<br>a car <em>company.</em></h1>
-        <p>We are a passionate team of automotive people helping Lagos drivers buy better, maintain smarter and enjoy every mile with confidence.</p>
+        <p>We are a passionate team of automotive people helping drivers buy better, maintain smarter and enjoy every mile with confidence.</p>
       </div>
     </section>
     <section class="intro-section" aria-labelledby="intro-title">
@@ -118,7 +121,7 @@
         <div><div class="eyebrow" style="color:#8d6a2e">Who we are</div></div>
         <div class="intro-copy">
           <h2 id="intro-title">Built for people<br>who expect <em>more.</em></h2>
-          <p>Eddyson Autos was created to make automotive ownership feel simple, transparent and rewarding. We combine a carefully selected vehicle collection with the specialist aftercare that every great car deserves.</p>
+          <p>For more than 10 years, Eddyson Autos has made automotive ownership feel simple, transparent and rewarding. We combine a carefully selected vehicle collection with the specialist aftercare that every great car deserves.</p>
           <p>From your first conversation to every service visit ahead, we are here to take the uncertainty out of the road.</p>
         </div>
       </div>
@@ -140,7 +143,7 @@
         <h2 id="promise-title">Every drive deserves a trusted <em>team.</em></h2>
         <p>Cars are personal. That is why we listen first, explain clearly and care deeply about getting every detail right—whether you are searching for your next vehicle or looking after the one already in your life.</p>
         <a class="button button--lime" href="index.html#services">OUR SERVICES <span class="arrow">&nearr;</span></a>
-        <div class="numbers"><div><strong>8+</strong><span>YEARS MOVING</span></div><div><strong>150+</strong><span>HAPPY DRIVERS</span></div><div><strong>4</strong><span>CORE SERVICES</span></div></div>
+        <div class="numbers"><div><strong>10+</strong><span>YEARS MOVING</span></div><div><strong>150+</strong><span>HAPPY DRIVERS</span></div><div><strong>4</strong><span>CORE SERVICES</span></div></div>
       </div>
     </section>
     <section class="contact" id="contact" aria-labelledby="contact-title">
