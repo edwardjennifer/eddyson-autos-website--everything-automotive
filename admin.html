@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Private Eddyson Autos administration dashboard.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | Eddyson Autos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#080b0c; --panel:#121819; --gold:#d8b66d; --muted:#aeb5b2; --line:rgba(255,255,255,.14); --red:#ffaaa0; }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; background:radial-gradient(ellipse at 50% 0%,#202726,var(--ink) 55%); color:#fff; font-family:Manrope,Arial,sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    button,input { font:inherit; }
+    button { cursor:pointer; }
+    .shell { width:min(94vw,1440px); margin:auto; }
+    .topbar { height:76px; border-bottom:1px solid var(--line); }
+    .nav { height:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:17px; font-weight:800; letter-spacing:-.06em; }
+    .brand-mark { display:grid; place-items:center; width:21px; height:21px; border:2px solid var(--gold); border-radius:50%; color:var(--gold); font:700 11px/1 "DM Mono",monospace; }
+    .back-link { color:var(--muted); font:9px "DM Mono",monospace; letter-spacing:.08em; }
+    .back-link:hover { color:var(--gold); }
+    main { padding:clamp(34px,6vw,78px) 0 70px; }
+    .eyebrow { color:var(--gold); font:10px "DM Mono",monospace; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { margin:13px 0 12px; font-size:clamp(38px,6vw,68px); letter-spacing:-.075em; line-height:.98; }
+    h1 em { font-family:"Playfair Display",serif; font-weight:600; }
+    .lede { max-width:650px; margin:0; color:var(--muted); font-size:13px; line-height:1.75; }
+    .panel { border:1px solid var(--line); background:rgba(18,24,25,.88); }
+    .login-card { width:min(100%,460px); margin:42px auto 0; padding:clamp(24px,5vw,40px); }
+    .login-card h2 { margin:0 0 10px; font-size:23px; letter-spacing:-.05em; }
+    .login-card p { color:var(--muted); font-size:12px; line-height:1.65; }
+    .form { display:grid; gap:15px; margin-top:23px; }
+    .form label { display:grid; gap:8px; color:#d5d9d5; font:9px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+    input { width:100%; min-height:47px; padding:0 13px; border:1px solid var(--line); outline:none; background:#0d1212; color:#fff; font:13px Manrope,Arial,sans-serif; letter-spacing:0; text-transform:none; }
+    input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(216,182,109,.12); }
+    .button { min-height:45px; padding:0 16px; border:1px solid var(--gold); background:var(--gold); color:var(--ink); font-size:9px; font-weight:800; letter-spacing:.09em; }
+    .button--quiet { background:transparent; color:var(--gold); }
+    .button:disabled { cursor:wait; opacity:.65; }
+    .message { min-height:20px; margin:14px 0 0; color:#d5c7a6; font-size:12px; line-height:1.55; }
+    .message[data-error="true"] { color:var(--red); }
+    .setup-note { padding:13px; border:1px solid rgba(216,182,109,.35); background:rgba(216,182,109,.06); color:#ddd1b5; font-size:11px; line-height:1.6; }
+    [hidden] { display:none !important; }
+    .dashboard-head { display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin:0 0 30px; }
+    .dashboard-head h1 { margin-bottom:0; }
+    .head-actions { display:flex; align-items:center; gap:16px; }
+    .signed-in { max-width:240px; overflow:hidden; color:var(--muted); font:9px "DM Mono",monospace; text-overflow:ellipsis; white-space:nowrap; }
+    .metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .metric { min-width:0; padding:20px; }
+    .metric-label { color:var(--muted); font:9px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+    .metric-value { display:block; margin-top:12px; color:var(--gold); font:600 clamp(28px,4vw,42px) "Playfair Display",serif; }
+    .chart-panel { margin-bottom:18px; padding:22px; }
+    .panel-heading { display:flex; align-items:baseline; justify-content:space-between; gap:15px; margin-bottom:18px; }
+    .panel-heading h2 { margin:0; font-size:16px; letter-spacing:-.04em; }
+    .panel-heading span { color:var(--muted); font:9px "DM Mono",monospace; }
+    .chart-wrap { position:relative; height:270px; }
+    .table-grid { display:grid; grid-template-columns:1fr; gap:16px; }
+    .table-panel { min-width:0; overflow:hidden; }
+    .table-panel .panel-heading { padding:20px 20px 0; }
+    .table-status { padding:0 20px; color:var(--muted); font-size:11px; }
+    .table-wrap { width:100%; overflow:auto; }
+    table { width:100%; border-collapse:collapse; font-size:11px; text-align:left; }
+    th,td { max-width:280px; padding:12px 15px; border-top:1px solid rgba(255,255,255,.1); vertical-align:top; overflow-wrap:anywhere; }
+    th { color:var(--gold); font:9px "DM Mono",monospace; letter-spacing:.04em; text-transform:uppercase; }
+    td { color:#d5d9d5; }
+    .table-note { padding:12px 20px 18px; color:#8f9994; font-size:10px; }
+    .error-card { margin:16px 0; padding:14px 16px; border:1px solid rgba(255,170,160,.4); background:rgba(255,100,85,.06); color:var(--red); font-size:12px; line-height:1.6; }
+    @media (max-width:680px) {
+      .shell { width:min(92vw,540px); }
+      .topbar { height:68px; }
+      .brand { font-size:14px; }
+      .back-link { font-size:8px; }
+      .dashboard-head { align-items:flex-start; flex-direction:column; }
+      .head-actions { width:100%; justify-content:space-between; }
+      .metrics { grid-template-columns:1fr; gap:9px; }
+      .metric { display:flex; align-items:center; justify-content:space-between; padding:15px 17px; }
+      .metric-value { margin:0; font-size:28px; }
+      .chart-panel { padding:17px; }
+      .chart-wrap { height:230px; }
+    }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="index.html"><span class="brand-mark">E</span>EDDYSON AUTOS</a>
+      <a class="back-link" href="index.html">BACK TO SITE &rarr;</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <section id="login-view" aria-labelledby="page-title">
+      <div class="eyebrow">Private administration</div>
+      <h1 id="page-title">Business <em>overview.</em></h1>
+      <p class="lede">Sign in with an authorized administrator account to review your customer, vehicle and inquiry data.</p>
+      <div class="login-card panel">
+        <h2>Administrator sign in</h2>
+        <p>Access is limited to the two authorized email accounts. Administrator accounts must be created in Supabase Auth.</p>
+        <form class="form" id="login-form">
+          <label>Email address<input name="email" type="email" autocomplete="username" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="button" type="submit">SIGN IN</button>
+        </form>
+        <p class="message" id="login-message" role="status" aria-live="polite"></p>
+        <p class="setup-note" id="setup-note" hidden>Supabase is not configured. Set the project-specific URL and publishable key in <code>supabase.js</code>.</p>
+      </div>
+    </section>
+
+    <section id="dashboard-view" hidden aria-labelledby="dashboard-title">
+      <div class="dashboard-head">
+        <div>
+          <div class="eyebrow">Eddyson Autos / analytics</div>
+          <h1 id="dashboard-title">Business <em>overview.</em></h1>
+        </div>
+        <div class="head-actions">
+          <span class="signed-in" id="signed-in-as"></span>
+          <button class="button button--quiet" id="refresh-button" type="button">REFRESH</button>
+          <button class="button button--quiet" id="logout-button" type="button">LOG OUT</button>
+        </div>
+      </div>
+      <p class="lede">Live record totals and up to 100 rows available under your Supabase row-level security policies.</p>
+      <div class="error-card" id="dashboard-error" role="status" hidden></div>
+      <div class="metrics" aria-label="Record totals">
+        <article class="metric panel"><span class="metric-label">Profiles</span><strong class="metric-value" id="profiles-count">—</strong></article>
+        <article class="metric panel"><span class="metric-label">Cars</span><strong class="metric-value" id="cars-count">—</strong></article>
+        <article class="metric panel"><span class="metric-label">Inquiries</span><strong class="metric-value" id="inquiries-count">—</strong></article>
+      </div>
+      <section class="chart-panel panel" aria-labelledby="chart-title">
+        <div class="panel-heading"><h2 id="chart-title">Records by category</h2><span>EXACT ROW COUNTS</span></div>
+        <div class="chart-wrap"><canvas id="records-chart" aria-label="Bar chart showing counts of profiles, cars and inquiries"></canvas></div>
+      </section>
+      <div class="table-grid">
+        <section class="table-panel panel" aria-labelledby="profiles-title">
+          <div class="panel-heading"><h2 id="profiles-title">Profiles</h2><span id="profiles-total"></span></div>
+          <p class="table-status" id="profiles-status" role="status">Waiting for data…</p>
+          <div class="table-wrap"><table id="profiles-table"></table></div>
+          <p class="table-note" id="profiles-note"></p>
+        </section>
+        <section class="table-panel panel" aria-labelledby="cars-title">
+          <div class="panel-heading"><h2 id="cars-title">Cars</h2><span id="cars-total"></span></div>
+          <p class="table-status" id="cars-status" role="status">Waiting for data…</p>
+          <div class="table-wrap"><table id="cars-table"></table></div>
+          <p class="table-note" id="cars-note"></p>
+        </section>
+        <section class="table-panel panel" aria-labelledby="inquiries-title">
+          <div class="panel-heading"><h2 id="inquiries-title">Inquiries</h2><span id="inquiries-total"></span></div>
+          <p class="table-status" id="inquiries-status" role="status">Waiting for data…</p>
+          <div class="table-wrap"><table id="inquiries-table"></table></div>
+          <p class="table-note" id="inquiries-note"></p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script type="module">
+    import { supabase } from './supabase.js';
+
+    const ADMIN_EMAILS = new Set([
+      'hyellaudaedward@gmail.com',
+      'eddygsk2018@gmail.com'
+    ]);
+    const TABLES = ['profiles', 'cars', 'inquiries'];
+    const loginView = document.querySelector('#login-view');
+    const dashboardView = document.querySelector('#dashboard-view');
+    const loginForm = document.querySelector('#login-form');
+    const loginMessage = document.querySelector('#login-message');
+    const setupNote = document.querySelector('#setup-note');
+    const dashboardError = document.querySelector('#dashboard-error');
+    const refreshButton = document.querySelector('#refresh-button');
+    const logoutButton = document.querySelector('#logout-button');
+    const totals = Object.fromEntries(TABLES.map(name => [name, 0]));
+    let recordsChart;
+
+    function setLoginMessage(text, isError = false) {
+      loginMessage.textContent = text;
+      if (isError) loginMessage.setAttribute('data-error', 'true');
+      else loginMessage.removeAttribute('data-error');
+    }
+
+    function isAdmin(user) {
+      return ADMIN_EMAILS.has(String(user?.email || '').trim().toLowerCase());
+    }
+
+    function showLogin(message = '', isError = false) {
+      dashboardView.hidden = true;
+      loginView.hidden = false;
+      setLoginMessage(message, isError);
+    }
+
+    function formatCell(value) {
+      if (value === null || value === undefined) return '—';
+      if (typeof value === 'object') return JSON.stringify(value);
+      return String(value);
+    }
+
+    function renderTable(name, rows, count, error) {
+      const table = document.querySelector(`#${name}-table`);
+      const status = document.querySelector(`#${name}-status`);
+      const total = document.querySelector(`#${name}-total`);
+      const note = document.querySelector(`#${name}-note`);
+      table.replaceChildren();
+      total.textContent = Number.isInteger(count) ? `${count.toLocaleString()} total` : '';
+      note.textContent = '';
+
+      if (error) {
+        status.textContent = `Unable to load ${name}: ${error.message}`;
+        return;
+      }
+
+      status.textContent = rows.length ? '' : 'No records found.';
+      if (!rows.length) return;
+
+      const columns = [...new Set(rows.flatMap(row => Object.keys(row)))];
+      const head = table.createTHead().insertRow();
+      columns.forEach(column => {
+        const cell = document.createElement('th');
+        cell.scope = 'col';
+        cell.textContent = column;
+        head.append(cell);
+      });
+
+      const body = table.createTBody();
+      rows.forEach(row => {
+        const line = body.insertRow();
+        columns.forEach(column => {
+          const cell = line.insertCell();
+          cell.textContent = formatCell(row[column]);
+        });
+      });
+
+      if (Number.isInteger(count) && count > rows.length) {
+        note.textContent = `Showing ${rows.length} of ${count.toLocaleString()} records.`;
+      }
+    }
+
+    function updateChart() {
+      const chartCanvas = document.querySelector('#records-chart');
+      if (typeof Chart === 'undefined') {
+        dashboardError.hidden = false;
+        dashboardError.textContent = 'The chart library did not load. Tables and record totals are still available.';
+        return;
+      }
+      if (recordsChart) recordsChart.destroy();
+      recordsChart = new Chart(chartCanvas, {
+        type: 'bar',
+        data: {
+          labels: ['Profiles', 'Cars', 'Inquiries'],
+          datasets: [{
+            label: 'Records',
+            data: TABLES.map(name => totals[name]),
+            backgroundColor: ['rgba(216,182,109,.82)', 'rgba(216,182,109,.55)', 'rgba(216,182,109,.32)'],
+            borderColor: '#d8b66d',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#c4cbc7' }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { color: '#aeb5b2', precision: 0 }, grid: { color: 'rgba(255,255,255,.1)' } }
+          }
+        }
+      });
+    }
+
+    async function loadDashboard(user) {
+      if (!supabase || !isAdmin(user)) {
+        showLogin('This account is not authorized to access the admin dashboard.', true);
+        return;
+      }
+
+      loginView.hidden = true;
+      dashboardView.hidden = false;
+      dashboardError.hidden = true;
+      document.querySelector('#signed-in-as').textContent = user.email;
+      TABLES.forEach(name => {
+        totals[name] = 0;
+        document.querySelector(`#${name}-count`).textContent = '…';
+        document.querySelector(`#${name}-status`).textContent = 'Loading…';
+      });
+
+      const results = await Promise.all(TABLES.map(name =>
+        supabase.from(name).select('*', { count: 'exact' }).range(0, 99)
+      ));
+
+      let anyError = false;
+      results.forEach((result, index) => {
+        const name = TABLES[index];
+        if (result.error) {
+          anyError = true;
+          document.querySelector(`#${name}-count`).textContent = '—';
+          renderTable(name, [], null, result.error);
+          return;
+        }
+
+        totals[name] = result.count ?? result.data.length;
+        document.querySelector(`#${name}-count`).textContent = totals[name].toLocaleString();
+        renderTable(name, result.data || [], result.count, null);
+      });
+
+      if (anyError) {
+        dashboardError.hidden = false;
+        dashboardError.textContent = 'One or more tables could not be read. Check that the tables exist and their RLS policies in admin-access.sql are configured.';
+      }
+      updateChart();
+    }
+
+    if (!supabase) {
+      setupNote.hidden = false;
+      loginForm.querySelector('button').disabled = true;
+      setLoginMessage('Supabase configuration is required before admin access can be used.', true);
+    } else {
+      loginForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = loginForm.querySelector('button');
+        const formData = new FormData(loginForm);
+        button.disabled = true;
+        setLoginMessage('Signing in…');
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: formData.get('email'),
+          password: formData.get('password')
+        });
+
+        if (error) {
+          setLoginMessage(error.message, true);
+        } else if (!isAdmin(data.user)) {
+          const { error: signOutError } = await supabase.auth.signOut();
+          if (signOutError) console.error('Unable to end unauthorized session:', signOutError.message);
+          setLoginMessage('This account is not authorized to access the admin dashboard.', true);
+        } else {
+          await loadDashboard(data.user);
+        }
+        button.disabled = false;
+      });
+
+      refreshButton.addEventListener('click', async () => {
+        refreshButton.disabled = true;
+        const { data, error } = await supabase.auth.getUser();
+        if (error) {
+          showLogin('Unable to verify your session. Please sign in again.', true);
+        } else {
+          await loadDashboard(data.user);
+        }
+        refreshButton.disabled = false;
+      });
+
+      logoutButton.addEventListener('click', async () => {
+        logoutButton.disabled = true;
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+          dashboardError.hidden = false;
+          dashboardError.textContent = `Unable to sign out: ${error.message}`;
+        } else {
+          if (recordsChart) recordsChart.destroy();
+          loginForm.reset();
+          showLogin('You have signed out.');
+        }
+        logoutButton.disabled = false;
+      });
+
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) {
+        showLogin('Unable to verify your session. Please sign in again.', true);
+      } else if (session?.user) {
+        if (!isAdmin(session.user)) {
+          const { error: signOutError } = await supabase.auth.signOut();
+          if (signOutError) console.error('Unable to end unauthorized session:', signOutError.message);
+          showLogin('This account is not authorized to access the admin dashboard.', true);
+        } else {
+          await loadDashboard(session.user);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

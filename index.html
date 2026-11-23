@@ -22,6 +22,11 @@
     .brand-mark { width:21px; height:21px; display:grid; place-items:center; border:2px solid var(--lime); border-radius:50%; color:var(--lime); font:700 11px/1 "DM Mono",monospace; }
     .nav-links { display:flex; align-items:center; gap:30px; margin-left:auto; font-size:10px; font-weight:800; letter-spacing:.1em; }
     .nav-links a:hover { color:var(--lime); }
+    .auth-controls { display:flex; align-items:center; gap:10px; flex:none; font-size:9px; font-weight:800; letter-spacing:.06em; }
+    .auth-controls a, .auth-controls button { border:0; background:none; color:var(--lime); font:inherit; letter-spacing:inherit; white-space:nowrap; }
+    .auth-controls button { padding:8px 0; }
+    .auth-controls [data-auth-user] { max-width:145px; overflow:hidden; color:#fff; text-overflow:ellipsis; }
+    [data-auth-login][hidden], [data-auth-user][hidden], [data-auth-logout][hidden] { display:none; }
     .button { display:inline-flex; align-items:center; justify-content:center; gap:12px; min-height:46px; padding:0 19px; border:1px solid transparent; font-size:10px; font-weight:800; letter-spacing:.07em; transition:transform .25s ease, box-shadow .25s ease, background .25s ease; }
     .button:hover { transform:translateY(-3px); }
     .button--outline { border-color:var(--lime); color:#fff; }
@@ -227,6 +232,10 @@
       .shell { width:min(90vw,570px); }
       .topbar { height:70px; }
       .nav-links, .nav .button--outline { display:none; }
+      .nav { gap:10px; }
+      .brand { font-size:14px; }
+      .auth-controls { gap:7px; font-size:8px; }
+      .auth-controls [data-auth-user] { max-width:85px; }
       .menu-toggle { display:block; }
       .nav-links.is-open { position:absolute; inset:70px 0 auto; display:flex; flex-direction:column; align-items:stretch; gap:0; padding:10px 5vw 18px; background:#101415; border-bottom:1px solid var(--line); }
       .nav-links.is-open a { padding:14px 0; }
@@ -262,6 +271,10 @@
     }
     @media (max-width:390px) {
       .shell { width:calc(100% - 32px); }
+      .nav { gap:6px; }
+      .brand { font-size:12px; }
+      .auth-controls { gap:4px; font-size:7px; }
+      .auth-controls [data-auth-user] { max-width:54px; }
       .hero { min-height:620px; }
       .hero h1 { font-size:51px; }
       .section { padding:70px 0; }
@@ -293,6 +306,11 @@
         <a href="about.html">ABOUT US</a>
         <a href="reviews.html">REVIEWS</a>
         <a href="#contact">CONTACT</a>
+      </div>
+      <div class="auth-controls" aria-live="polite">
+        <a href="auth.html" data-auth-login>LOG IN</a>
+        <span data-auth-user hidden></span>
+        <button type="button" data-auth-logout hidden>LOG OUT</button>
       </div>
       <a class="button button--outline" href="https://wa.me/2349157424129">WHATSAPP US</a>
       <button class="menu-toggle" id="menu-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation">&#9776;</button>
@@ -825,18 +843,8 @@
     })();
   </script>
   <script src="parts-showcase.js" defer></script>
-  <!-- Start of Tawk.to Script -->
-  <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/6b00419ee3f9823c9412129e/1k7sg0l86';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
-  </script>
-  <!-- End of Tawk.to Script -->
+  <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/11/23/19/20261123195206-3EVASBWZ.js" defer></script>
+  <script type="module" src="supabase.js"></script>
 </body>
 </html>

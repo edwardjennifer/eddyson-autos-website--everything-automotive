@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in or create your Eddyson Autos customer account.">
+  <title>Customer Account | Eddyson Autos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#080b0c; --panel:#121819; --gold:#d8b66d; --muted:#aeb5b2; --line:rgba(255,255,255,.16); }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; background:radial-gradient(ellipse at 50% 20%,#202726,var(--ink) 65%); color:#fff; font-family:Manrope,Arial,sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    button,input { font:inherit; }
+    .shell { width:min(90vw,1400px); margin:auto; }
+    .topbar { height:82px; border-bottom:1px solid var(--line); }
+    .nav { height:100%; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:19px; font-weight:800; letter-spacing:-1px; }
+    .brand-mark { display:grid; place-items:center; width:21px; height:21px; border:2px solid var(--gold); border-radius:50%; color:var(--gold); font:700 11px/1 "DM Mono",monospace; }
+    .back-link { color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.06em; }
+    .back-link:hover { color:var(--gold); }
+    main { display:grid; place-items:center; min-height:calc(100vh - 82px); padding:50px 16px; }
+    .account-card { width:min(100%,480px); padding:clamp(25px,6vw,48px); border:1px solid var(--line); background:rgba(18,24,25,.92); box-shadow:0 28px 90px rgba(0,0,0,.32); }
+    .eyebrow { color:var(--gold); font:10px "DM Mono",monospace; letter-spacing:.13em; text-transform:uppercase; }
+    h1 { margin:13px 0 12px; font-size:clamp(37px,8vw,54px); letter-spacing:-.07em; line-height:1; }
+    h1 em { font-family:"Playfair Display",serif; font-weight:600; }
+    .intro { margin:0 0 27px; color:var(--muted); font-size:13px; line-height:1.75; }
+    .tabs { display:grid; grid-template-columns:1fr 1fr; margin-bottom:25px; border-bottom:1px solid var(--line); }
+    .tab { padding:13px 8px; border:0; border-bottom:2px solid transparent; background:none; color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.08em; }
+    .tab[aria-selected="true"] { border-color:var(--gold); color:var(--gold); }
+    .form { display:grid; gap:16px; }
+    .form[hidden] { display:none; }
+    label { display:grid; gap:8px; color:#d5d9d5; font:9px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+    input { width:100%; min-height:48px; padding:0 13px; border:1px solid rgba(255,255,255,.18); border-radius:0; outline:none; background:#0d1212; color:#fff; font:13px Manrope,Arial,sans-serif; letter-spacing:0; text-transform:none; }
+    input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(216,182,109,.12); }
+    input::placeholder { color:#77817c; }
+    .submit { min-height:48px; margin-top:5px; border:0; background:var(--gold); color:var(--ink); font-size:10px; font-weight:800; letter-spacing:.08em; }
+    .submit:disabled { cursor:wait; opacity:.65; }
+    .message { min-height:20px; margin:17px 0 0; color:#d5c7a6; font-size:12px; line-height:1.6; }
+    .message[data-error="true"] { color:#ffaaa0; }
+    .setup-note { margin:12px 0 0; color:#8f9994; font-size:10px; line-height:1.65; }
+    @media (max-width:560px) { .topbar { height:70px; } main { min-height:calc(100vh - 70px); padding:28px 16px; } .back-link { font-size:9px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="index.html"><span class="brand-mark">E</span>EDDYSON AUTOS</a>
+      <a class="back-link" href="index.html">BACK TO SITE &rarr;</a>
+    </nav>
+  </header>
+  <main>
+    <section class="account-card" aria-labelledby="account-title">
+      <div class="eyebrow">Your Eddyson account</div>
+      <h1 id="account-title">Welcome <em>back.</em></h1>
+      <p class="intro">Sign in to your customer account or create one to stay connected with Eddyson Autos.</p>
+      <div class="tabs" role="tablist" aria-label="Account action">
+        <button class="tab" id="signin-tab" type="button" role="tab" aria-controls="signin-form" aria-selected="true">SIGN IN</button>
+        <button class="tab" id="signup-tab" type="button" role="tab" aria-controls="signup-form" aria-selected="false">CREATE ACCOUNT</button>
+      </div>
+      <form class="form" id="signin-form" role="tabpanel" aria-labelledby="signin-tab">
+        <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" placeholder="Your password" required></label>
+        <button class="submit" type="submit">SIGN IN</button>
+      </form>
+      <form class="form" id="signup-form" role="tabpanel" aria-labelledby="signup-tab" hidden>
+        <label>Full name<input name="full_name" type="text" autocomplete="name" maxlength="120" placeholder="Your full name" required></label>
+        <label>Phone number<input name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="+234 ..." required></label>
+        <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <label>Password<input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required></label>
+        <button class="submit" type="submit">CREATE ACCOUNT</button>
+      </form>
+      <p class="message" id="form-message" role="status" aria-live="polite"></p>
+      <p class="setup-note" id="setup-note" hidden>Customer accounts are not configured yet. Contact the site administrator.</p>
+    </section>
+  </main>
+  <script type="module">
+    import { saveProfile, supabase } from './supabase.js';
+
+    const signinTab = document.querySelector('#signin-tab');
+    const signupTab = document.querySelector('#signup-tab');
+    const signinForm = document.querySelector('#signin-form');
+    const signupForm = document.querySelector('#signup-form');
+    const message = document.querySelector('#form-message');
+    const accountTitle = document.querySelector('#account-title');
+    const setupNote = document.querySelector('#setup-note');
+
+    function showTab(isSignup) {
+      signinForm.hidden = isSignup;
+      signupForm.hidden = !isSignup;
+      signinTab.setAttribute('aria-selected', String(!isSignup));
+      signupTab.setAttribute('aria-selected', String(isSignup));
+      accountTitle.innerHTML = isSignup ? 'Join <em>Eddyson.</em>' : 'Welcome <em>back.</em>';
+      message.textContent = '';
+      message.removeAttribute('data-error');
+    }
+
+    function setMessage(text, isError) {
+      message.textContent = text;
+      if (isError) message.setAttribute('data-error', 'true');
+      else message.removeAttribute('data-error');
+    }
+
+    signinTab.addEventListener('click', () => showTab(false));
+    signupTab.addEventListener('click', () => showTab(true));
+
+    if (!supabase) {
+      setupNote.hidden = false;
+      signinForm.querySelector('button').disabled = true;
+      signupForm.querySelector('button').disabled = true;
+      setMessage('Supabase configuration is required before accounts can be used.', true);
+    } else {
+      signinForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = signinForm.querySelector('button');
+        button.disabled = true;
+        setMessage('Signing in…');
+        const formData = new FormData(signinForm);
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: formData.get('email'),
+          password: formData.get('password')
+        });
+        if (error) {
+          setMessage(error.message, true);
+        } else {
+          const { error: profileError } = await saveProfile(data.user, {});
+          if (profileError) console.error('Profile could not be saved:', profileError.message);
+          setMessage('Signed in successfully. Taking you back to the site…');
+          window.location.assign('index.html');
+        }
+        button.disabled = false;
+      });
+
+      signupForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = signupForm.querySelector('button');
+        button.disabled = true;
+        setMessage('Creating your account…');
+        const formData = new FormData(signupForm);
+        const fullName = String(formData.get('full_name')).trim();
+        const phone = String(formData.get('phone')).trim();
+        const { data, error } = await supabase.auth.signUp({
+          email: formData.get('email'),
+          password: formData.get('password'),
+          options: {
+            data: { full_name: fullName, phone },
+            emailRedirectTo: window.location.origin + window.location.pathname
+          }
+        });
+        if (error) {
+          setMessage(error.message, true);
+        } else if (data.session) {
+          const { error: profileError } = await saveProfile(data.user, { full_name: fullName, phone });
+          if (profileError) console.error('Profile could not be saved:', profileError.message);
+          setMessage('Your account is ready. Taking you back to the site…');
+          window.location.assign('index.html');
+        } else {
+          setMessage('Check your email to confirm your account, then sign in here.');
+        }
+        button.disabled = false;
+      });
+    }
+  </script>
+  <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/11/23/19/20261123195206-3EVASBWZ.js" defer></script>
+  <script type="module" src="supabase.js"></script>
+</body>
+</html>
